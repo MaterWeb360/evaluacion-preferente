@@ -1,0 +1,41 @@
+<?php return array(
+    'root' => array(
+        'name' => 'vendor/el-tema',
+        'pretty_version' => '1.0.0+no-version-set',
+        'version' => '1.0.0.0',
+        'reference' => NULL,
+        'type' => 'library',
+        'install_path' => __DIR__ . '/../../',
+        'aliases' => array(),
+        'dev' => true,
+    ),
+    'versions' => array(
+        'htmlburger/carbon-fields' => array(
+            'pretty_version' => 'v3.6.0',
+            'version' => '3.6.0.0',
+            'reference' => '47f1538cca6cd2860d1b37a040a42c59eb798d76',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../htmlburger/carbon-fields',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'iamntz/carbon-fields-urlpicker' => array(
+            'pretty_version' => '3.0.10',
+            'version' => '3.0.10.0',
+            'reference' => '0d5014d078dc797af33829c9ad1aee2ae4074fd4',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../iamntz/carbon-fields-urlpicker',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'vendor/el-tema' => array(
+            'pretty_version' => '1.0.0+no-version-set',
+            'version' => '1.0.0.0',
+            'reference' => NULL,
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../../',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+    ),
+);

@@ -1,0 +1,19 @@
+{
+    "name": "vendor/el-tema",
+    "description": "sitio web wordpress",
+    "autoload": {
+        "psr-4": {
+            "Vendor\\ElTema\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Maryory Chavez",
+            "email": "maryory.chavez@gmail.com"
+        }
+    ],
+    "require": {
+        "htmlburger/carbon-fields": "^3.6",
+        "iamntz/carbon-fields-urlpicker": "^3.0"
+    }
+}
