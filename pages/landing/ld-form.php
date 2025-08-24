@@ -21,6 +21,18 @@ $form_carrera_t = htmlspecialchars(elCampo('lista-carrera-titulo'), ENT_QUOTES, 
 $modulos_html = "";
 $modulos_horarios_html = "";
 $modulos_carreras_html = "";
+$sedes_disponibles = [
+    'lima_norte' => 'Lima Norte (Puente Piedra)',
+    'lima_sur' => 'Lima Sur'
+];
+
+// Generar HTML para el selector de sede
+$selector_sede_html = "<select name='sede' id='selector-sede' class='w-select form__input-select-wrapper sede-selector' style='display: none;'>";
+$selector_sede_html .= "<option value='' selected disabled>Selecciona una sede</option>";
+foreach ($sedes_disponibles as $valor => $texto) {
+    $selector_sede_html .= "<option value='{$valor}'>{$texto}</option>";
+}
+$selector_sede_html .= "</select>";
 
 foreach ($form_modulos as $key => $modulo) {
     if ($modulo['ocultar'] === false) {
@@ -52,7 +64,6 @@ foreach ($form_modulos as $key => $modulo) {
                 
                 $modulos_horarios_html .= "<option value='{$modalidad_codigo}' data-original-value='{$modalidad_codigo}' data-modulo='modulo{$key}' data-horario='horario{$key}-{$key_b}'>{$modalidad_nombre}</option>";
 
-
                 foreach ($modulos_carreras as $key_c => $carrera) {
                     $carrera_nombre = htmlspecialchars(elCampo($carrera, 'carrera_nombre'), ENT_QUOTES, 'UTF-8');
                     $carrera_codigo = htmlspecialchars(elCampo($carrera, 'carrera_codigo'), ENT_QUOTES, 'UTF-8');
@@ -67,9 +78,12 @@ foreach ($form_modulos as $key => $modulo) {
             foreach ($carreras_alter as $key_ba => $carrera_alter) {
                 $carrera_nombre = htmlspecialchars(elCampo($carrera_alter, 'carrera_nombre'), ENT_QUOTES, 'UTF-8');
                 $carrera_codigo = htmlspecialchars(elCampo($carrera_alter, 'carrera_codigo'), ENT_QUOTES, 'UTF-8');
+                $sedes_carrera = elCampo($carrera_alter, 'modalidad_sede'); // Array de sedes
                 
-                $modulos_carreras_html .= $key_ba === 0 ? "<option value='titulo{$key}-{$key_ba}' data-original-value='titulo{$key}-{$key_ba}' data-modulo='modulo{$key}' data-horario='horario-alter{$key}' selected disabled >$titulo_lista_carreras</option>" : null;
-                $modulos_carreras_html .= "<option value='{$carrera_codigo}' data-original-value='{$carrera_codigo}' data-modulo='modulo{$key}' data-horario='horario-alter{$key}'>{$carrera_nombre}</option>";
+                $data_sedes = is_array($sedes_carrera) ? implode(',', $sedes_carrera) : '';
+                
+                $modulos_carreras_html .= $key_ba === 0 ? "<option value='titulo{$key}-{$key_ba}' data-original-value='titulo{$key}-{$key_ba}' data-modulo='modulo{$key}' data-horario='horario-alter{$key}' data-sedes='{$data_sedes}' selected disabled >$titulo_lista_carreras</option>" : null;
+                $modulos_carreras_html .= "<option value='{$carrera_codigo}' data-original-value='{$carrera_codigo}' data-modulo='modulo{$key}' data-horario='horario-alter{$key}' data-sedes='{$data_sedes}'>{$carrera_nombre}</option>";
             }
         }
     }
@@ -133,16 +147,18 @@ foreach ($form_modulos as $key => $modulo) {
                                 <div class="form_campos-col">
                                     <input class="form__input-select-wrapper w-input" maxlength="256" name="cCelular" data-name="cCelular" placeholder="Celular*" type="tel" id="cCelular-3" required="">
                                     <input class="form__input-select-wrapper w-node-e41b8217-7007-4227-0e11-1da7ad034b49-dc299573 w-input" maxlength="256" name="cDni" data-name="cDni" placeholder="DNI*" type="text" id="cDni" style="display:none">
-                                    <!-- <input class="form__input-select-wrapper w-node-e41b8217-7007-4227-0e11-1da7ad034b49-dc299573 w-input" maxlength="256" name="cDni" data-name="cDni" placeholder="DNI*" type="text" id="cDni" required=""> -->
                                     <input class="form__input-select-wrapper w-input" maxlength="256" name="cCorreo" data-name="cCorreo" placeholder="ejemplo@gmail.com" type="email" id="cCorreo" required="">
                                 </div>
-                                <!-- <input class="form__input-select-wrapper w-input" maxlength="256" name="cCorreo" data-name="cCorreo" placeholder="ejemplo@gmail.com" type="email" id="cCorreo" required=""> -->
                                 <div id="divhorario" class="div_contenedor ">
                                     <select id="nHorario" name="nHorario" data-name="nHorario" required="" class="w-select form__input-select-wrapper">
                                     </select>
                                 </div>
+                                <!-- Selector de sede agregado aquí -->
+                                <div id="divsede" class="div_contenedor" style="display: none;">
+                                    <?= $selector_sede_html ?>
+                                </div>
                                 <div id="divcarrera" class="div_contenedor">
-                                    <select id="nUniOrgCodigo" name="nUniOrgCodigo" data-name="nUniOrgCodigo" required="" class="w-select form__input-select-wrapper">
+                                    <select id="nUniOrgCodigo" name="nUniOrgCodigo" data-name="nUniOrgCodigo" class="w-select form__input-select-wrapper">
                                     </select>
                                 </div>
                             </div>

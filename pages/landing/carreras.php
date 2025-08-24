@@ -5,9 +5,24 @@ $titulo = elCampo('ldc-titulo');
 
 $grupos_carreras = elCampo('ldp-carreras');
 
+// Array de sedes disponibles
+$sedes_disponibles = [
+    'lima_norte' => 'Lima Norte (Puente Piedra)',
+    'lima_sur' => 'Lima Sur'
+];
+
+// Generar HTML para el selector de sede
+$selector_sede_html = "<select name='filtro_sede' id='filtro-sede-carreras' class='w-select form__input-select-wrapper sede-filter' style='height: 50px;'>";
+$selector_sede_html .= "<option value='todas' selected>Todas las sedes</option>";
+foreach ($sedes_disponibles as $valor => $texto) {
+    $selector_sede_html .= "<option value='{$valor}'>{$texto}</option>";
+}
+$selector_sede_html .= "</select>";
+
 $html_tabs = '';
 $html_groups = '';
 $numcarreras = [];
+
 foreach ($grupos_carreras as $key => $modalidad) {
     $numcarreras[] = elCampo($modalidad, 'numcarreras');
     $nombre_grupo = elCampo($modalidad, 'grupo');
@@ -31,10 +46,13 @@ foreach ($grupos_carreras as $key => $modalidad) {
         $brochure = fileCampo($carrera, 'brochure');
         $img = fileCampo($carrera, 'imagen');
         $icon = fileCampo($carrera, 'icon');
+        $sedes_carrera = elCampo($carrera, 'carreras_sede'); // Array de sedes de esta carrera
+        $data_sedes = is_array($sedes_carrera) ? implode(',', $sedes_carrera) : '';
+        
         $tm_img = TEMA_IMG;
         $con += 1;
         $html_carreras .= <<<HTML
-        <div id="w-node-e49c8431-492b-de93-c13e-4fc24280e09a-dc299573" class="estudia_tab-item">
+        <div class="estudia_tab-item" data-sedes="{$data_sedes}">
             <div class="line-carrera is-blue" style="background-color: {$colorpin}"></div>
             <img loading="lazy" src="{$icon}" alt="" class="estudia_tab-icon">
             <div>$nombre</div>
@@ -135,6 +153,12 @@ $html_groups = "<div class='estudia_tab-content w-tab-content'>$html_groups</div
                             <span id="numcarreras"><?= $numcarreras[0] ?></span> <?= $titulo ?>
                         </h2>
                     </div>
+                    
+                    <!-- Selector de sede para filtrar -->
+                    <div style="width: auto; max-width:300px;">
+                        <?= $selector_sede_html ?>
+                    </div>
+                    
                     <div data-current="Tab 1" data-easing="ease" data-duration-in="300" data-duration-out="100" class="estudia_tab w-tabs">
                         <?= $html_tabs ?>
                         <?= $html_groups ?>

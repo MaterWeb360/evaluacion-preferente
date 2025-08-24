@@ -43,6 +43,7 @@ Container::make('post_meta', 'front_form', __('Formulario'))
                     ->add_fields([
                         // Field::make('checkbox', 'ocultar-horario', 'Ocultar el select "horario" en el formulario')
                         //     ->set_option_value('yes'),
+                       
                         Field::make('text', 'modalidad_nombre', __('Nombre de Horario')),
                         Field::make('text', 'modalidad_codigo', __('Código de Horario')),
                         Field::make('text', 'lista-carrera-titulo', __('Titulo de carrera')),
@@ -71,6 +72,12 @@ Container::make('post_meta', 'front_form', __('Formulario'))
                     ->setup_labels(['plural_name' => 'Carreras', 'singular_name' => 'Carrera'])
                     ->set_layout('tabbed-vertical')
                     ->add_fields([
+                        Field::make('multiselect', 'modalidad_sede', 'Sedes')
+                            ->set_options(array(
+                                'lima_norte' => 'Lima Norte (Puente Piedra)',
+                                'lima_sur' => 'Lima Sur'
+                            ))
+                            ->set_width(100),
                         Field::make('text', 'carrera_nombre', __('Nombre de carrera')),
                         Field::make('text', 'carrera_codigo', __('Código de carrera')),
                     ])
@@ -129,6 +136,14 @@ Container::make('post_meta', 'ld-carreras', 'Sección: Carreras')
                 Field::make('complex', 'carreras', 'Lista de carrera')
                     ->set_layout('tabbed-vertical')
                     ->add_fields([
+
+                        Field::make('multiselect', 'carreras_sede', 'Sedes')
+                            ->set_options(array(
+                                'lima_norte' => 'Lima Norte (Puente Piedra)',
+                                'lima_sur' => 'Lima Sur'
+                            ))
+                            ->set_width(100),
+
                         Field::make('text', 'nombre', 'Nombre de carrera'),
 
                         Field::make('color', 'colorpin', 'Color de barra')
